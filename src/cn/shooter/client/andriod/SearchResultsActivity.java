@@ -51,10 +51,9 @@ public class SearchResultsActivity extends ResultsActivity {
     	super.fetchMore();
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-
-      
+    public boolean onPrepareOptionsMenu(Menu menu) {
+	
+    	super.onPrepareOptionsMenu(menu);
         if(mSubscribed) {
         	menu.add(ShooterClientAndroid.MENU_GROUP_SEARCH, ShooterClientAndroid.MENU_UNSUBSCRIBE, Menu.NONE, R.string.unsubscribe_label) //
         	.setIcon(R.drawable.ic_menu_delete);
@@ -63,11 +62,16 @@ public class SearchResultsActivity extends ResultsActivity {
             menu.add(ShooterClientAndroid.MENU_GROUP_SEARCH, ShooterClientAndroid.MENU_SUBSCRIBE, Menu.NONE, R.string.subscribe_label) //
             	.setIcon(R.drawable.ic_menu_add);
         }
-        
+
         MenuItem mi = menu.add(ShooterClientAndroid.MENU_GROUP_SEARCH, ShooterClientAndroid.MENU_CLOSE_TAB, Menu.NONE, R.string.close_tab_label) ;
     	mi.setIcon(R.drawable.ic_menu_close);
-    	//mi.setIntent();
-        return true;
+    	
+	    return true;
+	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	return super.onCreateOptionsMenu(menu);
     }
    
 
@@ -77,13 +81,9 @@ public class SearchResultsActivity extends ResultsActivity {
 	        case ShooterClientAndroid.MENU_UNSUBSCRIBE:
 	        {
 	        	mSubscribed = false;
-	        	
-            	SharedPreferences.Editor sharedata = getSharedPreferences ( "data", 0). edit ();
-            		
-            	sharedata.remove( "subscribe1");
-
-	            sharedata.commit ();
-            	
+	        	ShooterClientAndroid shtc = (ShooterClientAndroid)getParent();
+	        	shtc.removeSubscribe( mKeyword );
+	        	shtc.closeCurrentTab();
 	        }
                 return true;
             case ShooterClientAndroid.MENU_SUBSCRIBE:
@@ -92,11 +92,8 @@ public class SearchResultsActivity extends ResultsActivity {
             
             	mSubscribed = true;
             	
-            	SharedPreferences.Editor sharedata = getSharedPreferences ( "data", 0). edit ();
-            	
-            	sharedata.putString ( "subscribe1", mKeyword );
-
-	            sharedata.commit ();
+            	ShooterClientAndroid shtc = (ShooterClientAndroid)getParent();
+	        	shtc.addSubscribe( mKeyword ); 
             	
             }
                 return true;
