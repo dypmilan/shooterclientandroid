@@ -165,9 +165,11 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 				setEmptyView();
 		}
 		if( mListAdapter.getCount() <= itemCountBefore ) {
-			setEmptyView();
 			mListAdapter.haveMoreToCome = false;
 		}
+		if( mListAdapter.getCount() <= 0 )
+			setEmptyView();
+		
 		mBusy = false;
 	}
 	public void setEmptyView() {
