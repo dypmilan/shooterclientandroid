@@ -34,9 +34,6 @@ public class SearchResultsActivity extends ResultsActivity {
 		}
     	
         super.onCreate(savedInstanceState);
-        
-
-	      
 	   
     }
     @Override

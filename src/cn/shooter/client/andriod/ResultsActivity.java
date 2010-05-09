@@ -75,7 +75,8 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 	@Override
 	public void run() {
 		fetchContent(fetchURL);
-        
+		if( mListAdapter.getCount() > 0 )
+		{
         ListView listView = getListView();
 	      listView.setOnItemClickListener(new OnItemClickListener() {
 	            @Override
@@ -99,8 +100,8 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 	                }
 	            }
 	        });
-	      
-	      handler.sendEmptyMessage(0);
+		}
+	    handler.sendEmptyMessage(0);
 	}
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -124,8 +125,10 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 	
 	     @Override
 	     public void handleMessage(Message msg) {
-	    	 
-		     mListAdapter.notifyDataSetChanged();
+	    	 if(mListAdapter.getCount() > 0)
+	    		 mListAdapter.notifyDataSetChanged();
+	    	 else
+	    		 setEmptyView();
 	     }
 	};
 	public void fetchContent(String uri) {
@@ -152,8 +155,7 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 		      } catch (Exception e) {  
 		    	    if(nextPageId > 1)
 						mListAdapter.haveMoreToCome = false;
-					else
-						setEmptyView();
+					
 		      }  
 		     
 		     is.close();  
@@ -161,16 +163,14 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 			// TODO Auto-generated catch block
 			if(nextPageId > 1)
 				mListAdapter.haveMoreToCome = false;
-			else
-				setEmptyView();
+			
 		}
 		if( mListAdapter.getCount() <= itemCountBefore ) {
 			mListAdapter.haveMoreToCome = false;
 		}
-		if( mListAdapter.getCount() <= 0 )
-			setEmptyView();
 		
 		mBusy = false;
+		
 	}
 	public void setEmptyView() {
         mEmptyProgress.setVisibility(ViewGroup.GONE);
