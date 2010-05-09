@@ -26,13 +26,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnLongClickListener;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ResultsActivity extends ListActivity implements Runnable {
+public class ResultsActivity extends ListActivity implements Runnable , OnScrollListener {
 
     private int mNoSearchResultsString = getNoSearchResultsStringId();
 
@@ -40,9 +42,13 @@ public class ResultsActivity extends ListActivity implements Runnable {
     private TextView mEmptyText;
     
     public String fetchURL;
-    public int nextPageId = 1;
+    private String lastFetchURL;
     
-    private SeparatedListAdapter mListAdapter = null;
+    public int maxSubId = -1;
+    public int nextPageId = 1;
+    public boolean mBusy = false;
+    
+    public SeparatedListAdapter mListAdapter = null;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +59,14 @@ public class ResultsActivity extends ListActivity implements Runnable {
         mEmptyText = (TextView)findViewById(R.id.emptyText);
         setLoadingView();
         
-
+        
 	     if( mListAdapter == null) {
 	    	 mListAdapter = new SeparatedListAdapter(this);
 	     }
-	     
-        Thread thread = new Thread(this);
+	     ListView listView = getListView();
+	     listView.setAdapter(mListAdapter);
+	     listView.setOnScrollListener(this);  
+	    Thread thread = new Thread(this);
         thread.start();
         
     }
@@ -97,12 +105,12 @@ public class ResultsActivity extends ListActivity implements Runnable {
 	
 	     @Override
 	     public void handleMessage(Message msg) {
-	    	 ListView listView = getListView();
-		     listView.setAdapter(mListAdapter);
-		      
+	    	 
+		     mListAdapter.notifyDataSetChanged();
 	     }
 	};
 	public void fetchContent(String uri) {
+		mBusy = true;
 		try {
 			 URL url = new URL(uri);
 			 
@@ -120,17 +128,27 @@ public class ResultsActivity extends ListActivity implements Runnable {
 		            reader.setContentHandler(handlerSAX);  
 		            reader.parse(new InputSource(is));  
 		            
+		            maxSubId = handlerSAX.maxSubId;
 		      } catch (Exception e) {  
-		    	  setEmptyView();
+		    	    if(nextPageId > 1)
+						mListAdapter.haveMoreToCome = false;
+					else
+						setEmptyView();
 		      }  
 		     
 		     is.close();  
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			setEmptyView();
+			if(nextPageId > 1)
+				mListAdapter.haveMoreToCome = false;
+			else
+				setEmptyView();
 		}
-		if( mListAdapter.getCount() < 0 )
+		if( mListAdapter.getCount() < 0 ) {
 			setEmptyView();
+			mListAdapter.haveMoreToCome = false;
+		}
+		mBusy = false;
 	}
 	public void setEmptyView() {
         mEmptyProgress.setVisibility(ViewGroup.GONE);
@@ -146,10 +164,37 @@ public class ResultsActivity extends ListActivity implements Runnable {
         return R.string.no_search_results;
     }
     
-    public void fetchMore() {
-    	String nextUrl = fetchURL + "page=" + nextPageId;
-    	nextPageId++;
+    public void  fetchMore() {
+    	if(lastFetchURL == fetchURL) {
+    		//Log.v("Fuck ", "Fetc");
+    		mListAdapter.haveMoreToCome = false;
+    		mListAdapter.notifyDataSetChanged();
+    		return;
+    	}
+    	//nextPageId++;
     	
+    	//fetchURL = "http://shooter.cn/xml/list/sub/14/14030.xml";
+    	Thread thread = new Thread(this);
+        thread.start();
     }
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		
+		int lastItem=firstVisibleItem+visibleItemCount;  
+		if(lastItem >= totalItemCount && mBusy == false
+				&& mListAdapter.getCount() > 0 && mListAdapter.haveMoreToCome ){
+			//Log.v("itemData", "z "+ lastItem + " y " + totalItemCount);
+			lastFetchURL = fetchURL;
+			fetchMore();
+		}
+		
+		
+	}
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

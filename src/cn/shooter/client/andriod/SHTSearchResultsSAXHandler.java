@@ -13,6 +13,7 @@ public class SHTSearchResultsSAXHandler extends DefaultHandler {
 	private final int XML_TYPE_HOT_WORDS = 1;
 	private final int XML_TYPE_SKIP = -1;
 	private int mXMLType = XML_TYPE_SEARCH_RESULT;
+	public int maxSubId = -1;
 	
 	public SHTSearchResultsSAXHandler(SeparatedListAdapter mListAdapter) {
 		m_ListAdapter = mListAdapter;
@@ -100,9 +101,10 @@ public class SHTSearchResultsSAXHandler extends DefaultHandler {
 		        	itemData.intro = myConcat(itemData.intro , builder.toString(), " ", "语种：");
 		        else if (localName == "uploader")
 		        	itemData.intro = myConcat(itemData.intro , builder.toString(), " ", "上传：");
-		        else if (localName == "id" && itemData.subid == null)
+		        else if (localName == "id" && itemData.subid == null){
 		        	itemData.subid =  builder.toString().trim();
-		        else if (localName == "fileid")
+		        	maxSubId = Math.max(Integer.parseInt(itemData.subid), maxSubId );
+		        }else if (localName == "fileid")
 		        	itemData.fileid =  builder.toString().trim();
 		        else if (localName == "rate")
 		        	itemData.rate = builder.toString().trim();

@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import android.app.SearchManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,20 @@ public class SearchResultsActivity extends ResultsActivity {
 
 	      
 	   
+    }
+    @Override
+	public void fetchMore() {
+    	//https://shooter.cn/xml/list/sub/14/14030.xml
+    	
+    	try {
+			fetchURL = "https://www.shooter.cn/search/Sub:"+URLEncoder.encode(mKeyword,"UTF-8")+"/?page="+nextPageId;
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+    	//Log.v("Fetch "+nextPageId, fetchURL);
+    	nextPageId++;
+    	super.fetchMore();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

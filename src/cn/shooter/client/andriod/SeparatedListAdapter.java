@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 public class SeparatedListAdapter extends BaseAdapter {
 	public final Map<String, Object> itemDatas = new LinkedHashMap<String, Object>();
+	public boolean haveMoreToCome = true;
     
     private LayoutInflater mInflater;
     
@@ -30,25 +31,37 @@ public class SeparatedListAdapter extends BaseAdapter {
     }
     
     public void addSection(String section, Object dataObj) {
+    	//Log.v("addSection", section);
         this.itemDatas.put(section, dataObj);
     }
     
 	@Override
 	public int getCount() {
-		
-	    return this.itemDatas.size();
+		if(this.itemDatas.size() > 0 && haveMoreToCome)
+			return this.itemDatas.size() + 1;
+		else
+			return this.itemDatas.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		 int id = 0;
-	     for ( Object dataObj : this.itemDatas.values()) {
+		//Log.v("itemData", "x " + position);
+		if(haveMoreToCome && this.itemDatas.size() > 0 && position == this.itemDatas.size()) {
+			
+			ItemDataStruct itemData = new ItemDataStruct();
+	    	itemData.itemType = ItemDataStruct.TYPE_SECTION_LOADING;
+	    	 
+	    	return itemData;
+	     }
+		int id = 0;
+	    for ( Object dataObj : this.itemDatas.values()) {
 	            if ( id == position) 
 	            	return dataObj;
 	            if ( id > position)
 	            	break;
 	            id++;
 	     }
+	     
 		return null;
 	}
 
@@ -62,10 +75,10 @@ public class SeparatedListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ItemDataStruct itemData = (ItemDataStruct) getItem(position);
 		if ( itemData != null) {
-			Log.v("itemData", itemData.toString());
+			//Log.v("itemData", itemData.toString() + " " + position);
 			switch(itemData.itemType){
 				case ItemDataStruct.TYPE_SECTION_DETAIL:
-			        if (convertView == null) 
+			        //if (convertView == null)  have re-init or will crash when reapear
 			            convertView = mInflater.inflate(R.layout.detail_list_item, null);
 			        
 			        TextView firstLine  = (TextView) convertView.findViewById(R.id.firstLine);
@@ -97,13 +110,18 @@ public class SeparatedListAdapter extends BaseAdapter {
 					break;
 				case ItemDataStruct.TYPE_SECTION_KEYWORDS:
 					
-					if (convertView == null) 
+					//if (convertView == null) 
 			            convertView = mInflater.inflate(R.layout.keyword_list_item, null);
 					
 					TextView titleLine  = (TextView) convertView.findViewById(R.id.firstLine);
 					//TextView rankWordsView  = (TextView) convertView.findViewById(R.id.rankTextView);
 					titleLine.setText(itemData.keyword);
 					//rankWordsView.setText("Rank: "+itemData.keywordRank);
+					break;
+				case ItemDataStruct.TYPE_SECTION_LOADING:
+					//if (convertView == null) 
+			            convertView = mInflater.inflate(R.layout.loading_list_item, null);
+					
 					break;
 				default:
 					return null;

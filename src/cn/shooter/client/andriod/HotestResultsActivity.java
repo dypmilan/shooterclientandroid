@@ -14,6 +14,6 @@ public class HotestResultsActivity extends ResultsActivity {
 		  
 	      super.onCreate(savedInstanceState);
 	      
-
+	      mListAdapter.haveMoreToCome = false;
 	  }
 }
