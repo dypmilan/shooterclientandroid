@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+ <style
+    name="ShooterClientAndroidTheme"
+    parent="@android:style/Theme.Light">
+    <item
+      name="android:listSeparatorTextViewStyle">@style/listSeparatorTextViewStyle</item>
+    <item
+      name="android:listViewStyle">@style/listViewStyle</item>
+  </style>
+  
+  
+  <style
+    name="listSeparatorTextViewStyle"
+    parent="@android:attr/listSeparatorTextViewStyle">
+    <item
+      name="android:layout_height">wrap_content</item>
+    <item
+      name="android:layout_width">fill_parent</item>
+    <item
+      name="android:paddingTop">2dip</item>
+    <item
+      name="android:paddingBottom">3dip</item>
+    <item
+      name="android:paddingLeft">5dip</item>
+    <item
+      name="android:background">@drawable/shooter_client_gradient</item>
+    <item
+      name="android:textAppearance">@android:style/TextAppearance.Small</item>
+    <item
+      name="android:shadowColor">#111111</item>
+    <item
+      name="android:shadowRadius">1</item>
+    <item
+      name="android:shadowDy">1</item>
+    <item
+      name="android:textStyle">bold</item>
+    <item
+      name="android:textColor">@android:color/white</item>
+  </style>
+  
+  <!--
+    These two styles, listViewStyle and tabHostStyle exist only to allow donut/cupcake to display a
+    black-backgrounded TabWidget while preserving the light color background of the app's listviews.
+  -->
+  <style
+    name="listViewStyle"
+    parent="@android:attr/listViewStyle">
+    <item
+      name="android:background">@android:color/white</item>
+    <item
+      name="android:divider">@drawable/divider</item>
+  </style>
+
+  <style
+    name="tabHostStyle">
+    <item
+      name="android:background">@android:color/black</item>
+  </style>
+  
+ <style
+    name="listItemStyle">
+    <item
+      name="android:paddingBottom">6dip</item>
+    <item
+      name="android:paddingLeft">6dip</item>
+  </style>
+  
+   <style name="TextViewStyleDetailListItemLineTitle">
+    <item name="android:textSize">15dip</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">@color/black_end</item>
+  </style>
+  
+    
+  <style name="TextViewStyleDetailListItemLineIntro">
+    <item name="android:textSize">13dip</item>
+    <item name="android:textColor">@color/dgrey_start</item>
+  </style>
+   
+  <style name="TextViewStyleDetailListItemLineTimestamp">
+    <item name="android:textSize">13dip</item>
+    <item name="android:textColor">@color/grey_end</item>
+  </style>
+  
+  <style name="TextViewStyleDetailListItemLineRankStar">
+    <item name="android:textSize">11dip</item>
+    <item name="android:textColor">@color/yellow_end</item>
+  </style>
+  
+</resources>

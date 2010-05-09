@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingBottom="7dip"
+  android:paddingRight="10dip"
+  android:orientation="horizontal"
+  style="@style/listItemStyle">
+
+
+  <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <!-- Title server generated. -->
+    <TextView
+      android:id="@+id/firstLine"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="@style/TextViewStyleDetailListItemLineTitle"
+      android:scrollHorizontally="true"
+      android:maxLines="1"
+      android:ellipsize="end" />
+    
+    <!-- Intro . -->
+    <TextView
+      android:id="@+id/secondLine"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="@style/TextViewStyleDetailListItemLineIntro"
+      android:maxLines="1"
+      android:scrollHorizontally="true"
+      android:ellipsize="end" />
+
+<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    <!-- Timestamp. -->
+    <TextView
+      android:id="@+id/timeTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:maxLines="1"
+      android:scrollHorizontally="true"
+      android:ellipsize="end"
+      android:textAppearance="@style/TextViewStyleDetailListItemLineTimestamp" />
+     
+       <!-- Stars. -->
+    <TextView
+      android:id="@+id/rankTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentBottom="true"
+      android:maxLines="1"
+      android:scrollHorizontally="true"
+      android:ellipsize="end"
+      android:textAppearance="@style/TextViewStyleDetailListItemLineRankStar" />
+      
+  	</RelativeLayout >
+  </LinearLayout>
+  
+</LinearLayout>

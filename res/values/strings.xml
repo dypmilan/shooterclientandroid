@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading">正在读取…</string>
+    <string name="app_name">射手网</string>
+    <string name="latest_label">最新</string>
+    <string name="hotest_label">最热</string>
+    <string name="search_label">搜索</string>
+    <string name="refresh_label">刷新</string>
+    <string name="subscribe_label">订阅</string>
+    <string name="unsubscribe_label">取消订阅</string>
+    <string name="no_search_results">没有获取到结果</string>
+</resources>
