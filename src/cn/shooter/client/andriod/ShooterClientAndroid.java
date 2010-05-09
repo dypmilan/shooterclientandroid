@@ -114,9 +114,6 @@ public class ShooterClientAndroid extends TabActivity {
                 onSearchRequested();
                 return true;
           
-            case MENU_REFRESH:
-                
-                return true;
           
         }
         return super.onOptionsItemSelected(item);

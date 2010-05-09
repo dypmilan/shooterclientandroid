@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -43,6 +44,7 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
     
     public String fetchURL;
     private String lastFetchURL;
+    private String orgFetchURL;
     
     public int maxSubId = -1;
     public int nextPageId = 1;
@@ -59,7 +61,7 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
         mEmptyText = (TextView)findViewById(R.id.emptyText);
         setLoadingView();
         
-        
+        orgFetchURL = fetchURL;
 	     if( mListAdapter == null) {
 	    	 mListAdapter = new SeparatedListAdapter(this);
 	     }
@@ -100,7 +102,24 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 	      
 	      handler.sendEmptyMessage(0);
 	}
-	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	        case ShooterClientAndroid.MENU_REFRESH:
+	        {
+	        	setContentView(R.layout.loadable_list_activity);
+	            setLoadingView();
+	            fetchURL = orgFetchURL ;
+		   	   mListAdapter = new SeparatedListAdapter(this);
+		   	   ListView listView = getListView();
+		   	   listView.setAdapter(mListAdapter);
+		   	   Thread thread = new Thread(this);
+	           thread.start();
+	        }
+	        return true;
+        }
+        return super.onOptionsItemSelected(item);
+	}
 	private Handler handler = new Handler() {
 	
 	     @Override
