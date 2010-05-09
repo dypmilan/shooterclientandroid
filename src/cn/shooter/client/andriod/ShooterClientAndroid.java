@@ -1,5 +1,8 @@
 package cn.shooter.client.andriod;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.SearchManager;
 import android.app.TabActivity;
@@ -15,6 +18,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TabHost.TabSpec;
 
 public class ShooterClientAndroid extends TabActivity {
 	public static final String TAG = "ShooterClientAndroidMainActivity";
@@ -27,7 +31,9 @@ public class ShooterClientAndroid extends TabActivity {
     public static final int MENU_REFRESH = 1;
     public static final int MENU_SUBSCRIBE = 2;
     public static final int MENU_UNSUBSCRIBE = 3;
+    public static final int MENU_CLOSE_TAB = 4;
     public static final int MENU_GROUP_SEARCH = 0;
+    private final Map<String, TabSpec> tabList = new LinkedHashMap<String,TabSpec>();  
     
     /** Called when the activity is first created. */
     @Override
@@ -114,7 +120,19 @@ public class ShooterClientAndroid extends TabActivity {
                 onSearchRequested();
                 return true;
           
-          
+            case MENU_CLOSE_TAB:
+            	//close current tab
+            	mTabHost.getCurrentTab();
+            	String tagThatNeedRemove = mTabHost.getCurrentTabTag();
+            	mTabHost.setCurrentTab(0);
+            	tabList.remove( tagThatNeedRemove );
+            	mTabHost.clearAllTabs();
+            	
+            	for ( TabSpec specData : tabList.values()) {
+            		mTabHost.addTab(specData);  
+            	}
+            	setTabHeight();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -124,26 +142,29 @@ public class ShooterClientAndroid extends TabActivity {
     	Intent searchIntent = new Intent(this, SearchResultsActivity.class); 
     	searchIntent.putExtra("keyword", keyword);
     	searchIntent.putExtra("subscribed", isSubscribed);
-    	mTabHost.addTab(mTabHost.newTabSpec("search_"+keyword) //
-                .setIndicator(keyword, null) // the tab icon//  getResources().getDrawable(R.drawable.icon)
+    	String tabTag = "search_"+keyword;
+    	TabSpec tabSpecData = mTabHost.newTabSpec(tabTag);
+    	mTabHost.addTab( tabSpecData.setIndicator(keyword, null) // the tab icon//  getResources().getDrawable(R.drawable.icon)
                 .setContent(searchIntent));// The  contained  activity
-    	
+    	tabList.put(tabTag, tabSpecData);
     	setTabHeight();
     	mTabHost.setCurrentTab(mTabHost.getTabWidget().getChildCount() - 1);
     }
     private void addTabLatest() {
         // Latest Sub tab
-       mTabHost.addTab(mTabHost.newTabSpec("latest") //
-               .setIndicator(getString(R.string.latest_label), null) // the tab icon//  getResources().getDrawable(R.drawable.icon)
+    	String tabTag = "latest";
+    	TabSpec tabSpecData = mTabHost.newTabSpec(tabTag);
+       mTabHost.addTab(tabSpecData.setIndicator(getString(R.string.latest_label), null) // the tab icon//  getResources().getDrawable(R.drawable.icon)
                .setContent(new Intent(this, LatestResultsActivity.class)) );// The  contained  activity
-               
+       tabList.put(tabTag, tabSpecData);  
    }
     private void addTabHotest() {
         // Hotest Sub tab
-       mTabHost.addTab(mTabHost.newTabSpec("hotest") //
-               .setIndicator(getString(R.string.hotest_label), null) // the tab icon//  getResources().getDrawable(R.drawable.icon)
+    	String tabTag = "hotest";
+    	TabSpec tabSpecData = mTabHost.newTabSpec(tabTag);
+       mTabHost.addTab(tabSpecData.setIndicator(getString(R.string.hotest_label), null) // the tab icon//  getResources().getDrawable(R.drawable.icon)
                .setContent(new Intent(this, HotestResultsActivity.class)) );// The  contained  activity
-               
+       tabList.put(tabTag, tabSpecData);
    }
 
 }

@@ -55,14 +55,18 @@ public class SearchResultsActivity extends ResultsActivity {
         super.onCreateOptionsMenu(menu);
 
       
-        menu.add(ShooterClientAndroid.MENU_GROUP_SEARCH, ShooterClientAndroid.MENU_SUBSCRIBE, Menu.NONE, R.string.subscribe_label) //
-        	.setIcon(R.drawable.ic_menu_add);
-
         if(mSubscribed) {
         	menu.add(ShooterClientAndroid.MENU_GROUP_SEARCH, ShooterClientAndroid.MENU_UNSUBSCRIBE, Menu.NONE, R.string.unsubscribe_label) //
-        	.setIcon(R.drawable.ic_menu_remove);
+        	.setIcon(R.drawable.ic_menu_delete);
 	
+        }else {
+            menu.add(ShooterClientAndroid.MENU_GROUP_SEARCH, ShooterClientAndroid.MENU_SUBSCRIBE, Menu.NONE, R.string.subscribe_label) //
+            	.setIcon(R.drawable.ic_menu_add);
         }
+        
+        MenuItem mi = menu.add(ShooterClientAndroid.MENU_GROUP_SEARCH, ShooterClientAndroid.MENU_CLOSE_TAB, Menu.NONE, R.string.close_tab_label) ;
+    	mi.setIcon(R.drawable.ic_menu_close);
+    	//mi.setIntent();
         return true;
     }
    
