@@ -130,6 +130,7 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 	};
 	public void fetchContent(String uri) {
 		mBusy = true;
+		int itemCountBefore =  mListAdapter.getCount();
 		try {
 			 URL url = new URL(uri);
 			 
@@ -163,7 +164,7 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 			else
 				setEmptyView();
 		}
-		if( mListAdapter.getCount() < 0 ) {
+		if( mListAdapter.getCount() <= itemCountBefore ) {
 			setEmptyView();
 			mListAdapter.haveMoreToCome = false;
 		}
