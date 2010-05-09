@@ -17,6 +17,7 @@ import org.xml.sax.XMLReader;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +52,26 @@ public class ResultsActivity extends ListActivity{
         setLoadingView();
         
         fetchContent(fetchURL);
+        
+        ListView listView = getListView();
+	      listView.setOnItemClickListener(new OnItemClickListener() {
+	            @Override
+	            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	            	ItemDataStruct itemData = (ItemDataStruct) parent.getAdapter().getItem(position);
+	                if (itemData.subid != null) {
+	                    //Intent intent = new Intent(LatestResultsActivity.this, SubDetailsActivity.class);
+	                    //intent.putExtra(UserDetailsActivity.EXTRA_USER_PARCEL, checkin.getUser());
+	                    //intent.putExtra(UserDetailsActivity.EXTRA_SHOW_ADD_FRIEND_OPTIONS, true);
+	                    //startActivity(intent);
+	                	//http://shooter.cn/xml/sub/140/140252.xml
+	                	int did = Integer.parseInt(itemData.subid)/1000;
+	                	String url = "http://www.shooter.cn/xml/sub/"+did+"/"+itemData.subid + ".xml";
+	                	Intent i = new Intent(Intent.ACTION_VIEW);
+	                	i.setData(Uri.parse(url));
+	                	startActivity(i);
+	                }
+	            }
+	        });
     }
 	public void fetchContent(String uri) {
 		try {

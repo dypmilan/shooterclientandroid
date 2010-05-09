@@ -100,7 +100,7 @@ public class SHTSearchResultsSAXHandler extends DefaultHandler {
 		        	itemData.intro = myConcat(itemData.intro , builder.toString(), " ", "语种：");
 		        else if (localName == "uploader")
 		        	itemData.intro = myConcat(itemData.intro , builder.toString(), " ", "上传：");
-		        else if (localName == "id")
+		        else if (localName == "id" && itemData.subid == null)
 		        	itemData.subid =  builder.toString().trim();
 		        else if (localName == "fileid")
 		        	itemData.fileid =  builder.toString().trim();
