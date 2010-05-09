@@ -19,6 +19,8 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ResultsActivity extends ListActivity{
+public class ResultsActivity extends ListActivity implements Runnable {
 
     private int mNoSearchResultsString = getNoSearchResultsStringId();
 
@@ -51,7 +53,18 @@ public class ResultsActivity extends ListActivity{
         mEmptyText = (TextView)findViewById(R.id.emptyText);
         setLoadingView();
         
-        fetchContent(fetchURL);
+
+	     if( mListAdapter == null) {
+	    	 mListAdapter = new SeparatedListAdapter(this);
+	     }
+	     
+        Thread thread = new Thread(this);
+        thread.start();
+        
+    }
+	@Override
+	public void run() {
+		fetchContent(fetchURL);
         
         ListView listView = getListView();
 	      listView.setOnItemClickListener(new OnItemClickListener() {
@@ -69,10 +82,26 @@ public class ResultsActivity extends ListActivity{
 	                	Intent i = new Intent(Intent.ACTION_VIEW);
 	                	i.setData(Uri.parse(url));
 	                	startActivity(i);
+	                }else if (itemData.keyword != null) {
+	                    //add new search tab result
+	                	ShooterClientAndroid shtc = (ShooterClientAndroid)getParent();
+	                	shtc.addTabSearch(itemData.keyword, false);
 	                }
 	            }
 	        });
-    }
+	      
+	      handler.sendEmptyMessage(0);
+	}
+	
+	private Handler handler = new Handler() {
+	
+	     @Override
+	     public void handleMessage(Message msg) {
+	    	 ListView listView = getListView();
+		     listView.setAdapter(mListAdapter);
+		      
+	     }
+	};
 	public void fetchContent(String uri) {
 		try {
 			 URL url = new URL(uri);
@@ -81,25 +110,20 @@ public class ResultsActivity extends ListActivity{
 		          
 		     InputStream is = con.getInputStream();  
 		 
-		     if( mListAdapter == null) {
-		    	 mListAdapter = new SeparatedListAdapter(this);
-		     }
 		    
 		     try    {  
 		            SAXParserFactory saxFactory = SAXParserFactory.newInstance();  
 		            SAXParser parser = saxFactory.newSAXParser();  
 		            XMLReader reader = parser.getXMLReader();  
 		              
-		            SHTSearchResultsSAXHandler handler = new SHTSearchResultsSAXHandler(mListAdapter);
-		            reader.setContentHandler(handler);  
+		            SHTSearchResultsSAXHandler handlerSAX = new SHTSearchResultsSAXHandler(mListAdapter);
+		            reader.setContentHandler(handlerSAX);  
 		            reader.parse(new InputSource(is));  
 		            
 		      } catch (Exception e) {  
 		    	  setEmptyView();
 		      }  
-		      ListView listView = getListView();
-		      listView.setAdapter(mListAdapter);
-		      
+		     
 		     is.close();  
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -127,4 +151,5 @@ public class ResultsActivity extends ListActivity{
     	nextPageId++;
     	
     }
+	
 }

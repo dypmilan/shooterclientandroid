@@ -33,6 +33,7 @@ public class ShooterClientAndroid extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	
         setContentView(R.layout.main);
         setDefaultKeyMode(Activity.DEFAULT_KEYS_SEARCH_LOCAL);
         //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
