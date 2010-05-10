@@ -8,4 +8,5 @@ public class SubDetailStruct {
 	public String sFileID;
 	public String timeStamp;
 	public String totalPosts;
+	public String sThreadID;
 }

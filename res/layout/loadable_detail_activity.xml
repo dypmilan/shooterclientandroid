@@ -17,6 +17,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:paddingRight="8dip"
+    android:paddingTop="11dip"
     android:orientation="vertical" android:visibility="gone">
     
    <RelativeLayout
@@ -72,7 +74,8 @@
     </LinearLayout>
    
    <RelativeLayout
-    android:paddingLeft="10dip" 
+    android:paddingLeft="10dip"
+    android:paddingTop="4dip"  
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
@@ -123,9 +126,10 @@
     android:orientation="vertical" >
  		 <!-- Intro -->
   		 <WebView android:id="@+id/item_intros"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
+              android:layout_width="fill_parent"
+              android:visibility="gone" 
+              android:layout_height="wrap_content"
+             />
     </LinearLayout>
   
   

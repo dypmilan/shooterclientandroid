@@ -10,6 +10,7 @@
     <string name="close_tab_label">关闭</string>
     <string name="detail_label">详细信息</string>
     <string name="detail_download_button">下载</string>
+    <string name="post_comment_label">评论</string>
     <string name="unsubscribe_label">取消订阅</string>
     <string name="no_search_results">没有获取到结果</string>
 </resources>

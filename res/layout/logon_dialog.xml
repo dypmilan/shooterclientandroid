@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!-- Copyright 2009 Joe LaPenna -->
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/layout_root"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:paddingTop="9dip"
+  android:paddingBottom="3dip"
+  android:paddingLeft="3dip"
+  android:paddingRight="1dip">
+  
+  <TextView
+    android:id="@+id/emptyText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="Email:" />
+  <EditText
+    android:id="@+id/userName"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:inputType="textPersonName"
+    android:imeOptions=""
+    android:lines="1"
+    android:gravity="top" />
+    
+    <TextView
+    android:id="@+id/emptyText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="密码:" />
+  <EditText
+    android:id="@+id/userPass"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:inputType="textPassword"
+    android:imeOptions=""
+    android:lines="1"
+    android:gravity="top" />
+</LinearLayout>

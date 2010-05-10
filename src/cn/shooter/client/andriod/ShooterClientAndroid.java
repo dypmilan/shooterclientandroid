@@ -41,6 +41,7 @@ public class ShooterClientAndroid extends TabActivity {
     public static final int MENU_SUBSCRIBE = 2;
     public static final int MENU_UNSUBSCRIBE = 3;
     public static final int MENU_CLOSE_TAB = 4;
+    public static final int MENU_POST_COMMENT = 5;
     public static final int MENU_GROUP_SEARCH = 0;
     private final Map<String, TabSpec> tabList = new LinkedHashMap<String,TabSpec>();  
     

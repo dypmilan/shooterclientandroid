@@ -52,7 +52,9 @@ public class SHTDetailResultsSAXHandler extends DefaultHandler {
         } else if (localName == "post") {
         	commentData = new CommentDataStruct();
     	} 
-        
+        else if (itemData != null && localName == "threadinfo") {
+    		itemData.sThreadID = "0";
+    	}
         
         
     }  
@@ -62,6 +64,8 @@ public class SHTDetailResultsSAXHandler extends DefaultHandler {
 	    	if(one == null){
 	    		one = "";
 	    	}else{
+	    		if( one.indexOf(two) >= 0 )
+	    			return one;
 	    		one += Sep;
 	    	}
 	    	
@@ -104,6 +108,9 @@ public class SHTDetailResultsSAXHandler extends DefaultHandler {
 		        else if (localName == "totalposts")
 		        	itemData.totalPosts = builder.toString().trim();
     		}
+    	if (itemData != null && localName == "id" && itemData.sThreadID == "0") {
+    		itemData.sThreadID = builder.toString().trim();
+    	}
 		       if ( commentData != null) {
 		        	//comment
 		        	
@@ -121,7 +128,6 @@ public class SHTDetailResultsSAXHandler extends DefaultHandler {
 		        	} else if (localName == "postime") {
 		        		commentData.sPosttime = builder.toString().trim();
 		        	}
-		        	
 		        	
 		        }
     	}
