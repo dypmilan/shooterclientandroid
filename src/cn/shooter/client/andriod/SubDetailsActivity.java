@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import com.admob.android.ads.*;
 
 public class SubDetailsActivity extends ListActivity   implements Runnable{
 	
@@ -47,7 +48,12 @@ public class SubDetailsActivity extends ListActivity   implements Runnable{
 	     
 	     Bundle extras = getIntent().getExtras();
 	     mSubid = extras.getString("subid");
-	    	
+	    /*
+	     AdManager.setTestDevices( new String[] {
+                 AdManager.TEST_EMULATOR, // Android emulator
+                 "10A1B7E9E780292FC509449E259476B2", // My  Test Phone
+	     } ); 
+	     */
 	     mEmptyProgress = (ProgressBar)findViewById(R.id.emptyProgress);
 	     mEmptyText = (TextView)findViewById(R.id.emptyText);
 	     mRatingBar = (RatingBar)findViewById(R.id.rating_bar);

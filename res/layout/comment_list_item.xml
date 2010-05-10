@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingBottom="1dip"
+  android:paddingRight="10dip"
+  android:orientation="horizontal"
+  style="@style/listItemStyle">
+
+
+  <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <!-- Content . -->
+    <TextView
+      android:id="@+id/contentLine"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="@style/TextViewStyleDetailListItemLineIntro"
+      android:ellipsize="marquee" />
+
+<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    <!-- Timestamp. -->
+    <TextView
+      android:id="@+id/postTimeTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:maxLines="1"
+      android:scrollHorizontally="true"
+      android:ellipsize="end"
+      android:textAppearance="@style/TextViewStyleDetailListItemLineTimestamp" />
+     
+       <!-- Name. -->
+    <TextView android:id="@+id/posterName"
+  			    
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentRight="true"
+      			android:layout_alignParentBottom="true"
+      			android:ellipsize="end"
+      			android:textAppearance="@style/TextViewStyleDetailListItemLineIntro"
+         />
+   
+  	</RelativeLayout >
+  </LinearLayout>
+  
+</LinearLayout>

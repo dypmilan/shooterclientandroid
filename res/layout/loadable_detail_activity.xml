@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res/cn.shooter.client.andriod"
   android:id="@+id/main"
   android:orientation="vertical"
+  android:scrollbars="vertical"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
+  android:layout_height="fill_parent"
+  android:background="@android:color/white"
+      >
 
 
 
@@ -128,6 +132,27 @@
   
   </LinearLayout>
   
+  <LinearLayout 
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                 >
+  
+  <com.admob.android.ads.AdView  
+          android:id="@+id/ad" 
+          app:backgroundColor="#434343"
+          app:primaryTextColor="#FFFFFF"
+          app:secondaryTextColor="#CCCCCC"
+          android:layout_width="fill_parent" 
+          android:layout_height="wrap_content"
+          app:keywords="Android movie"
+        />
+    </LinearLayout>
+     <LinearLayout 
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dip">
   <!-- 讨论 -->
   <ListView
     android:id="@android:id/list"
@@ -137,7 +162,7 @@
     android:drawSelectorOnTop="false"
      android:background="@android:color/white"
     android:scrollbars="vertical" />
-    
+    </LinearLayout>
   <include
     android:id="@android:id/empty"
     layout="@layout/empty_loading"
