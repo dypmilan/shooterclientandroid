@@ -23,7 +23,7 @@
       android:textAppearance="@style/TextViewStyleDetailListItemLineTitle"
       android:scrollHorizontally="true"
       android:maxLines="1"
-      android:ellipsize="end" />
+      android:ellipsize="marquee" />
     
     <!-- Intro . -->
     <TextView
@@ -33,7 +33,7 @@
       android:textAppearance="@style/TextViewStyleDetailListItemLineIntro"
       android:maxLines="1"
       android:scrollHorizontally="true"
-      android:ellipsize="end" />
+      android:ellipsize="marquee" />
 
 <RelativeLayout 
     android:layout_width="fill_parent"

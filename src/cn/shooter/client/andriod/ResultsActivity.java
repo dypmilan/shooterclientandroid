@@ -83,16 +83,17 @@ public class ResultsActivity extends ListActivity implements Runnable , OnScroll
 	            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 	            	ItemDataStruct itemData = (ItemDataStruct) parent.getAdapter().getItem(position);
 	                if (itemData.subid != null) {
-	                    //Intent intent = new Intent(LatestResultsActivity.this, SubDetailsActivity.class);
-	                    //intent.putExtra(UserDetailsActivity.EXTRA_USER_PARCEL, checkin.getUser());
-	                    //intent.putExtra(UserDetailsActivity.EXTRA_SHOW_ADD_FRIEND_OPTIONS, true);
-	                    //startActivity(intent);
+	                    Intent intent = new Intent(ResultsActivity.this, SubDetailsActivity.class);
+	                    intent.putExtra("subid", itemData.subid);
+	                    startActivity(intent);
 	                	//http://shooter.cn/xml/sub/140/140252.xml
-	                	int did = Integer.parseInt(itemData.subid)/1000;
-	                	String url = "http://www.shooter.cn/xml/sub/"+did+"/"+itemData.subid + ".xml";
-	                	Intent i = new Intent(Intent.ACTION_VIEW);
-	                	i.setData(Uri.parse(url));
-	                	startActivity(i);
+	                	/*
+		                	int did = Integer.parseInt(itemData.subid)/1000;
+		                	String url = "http://www.shooter.cn/xml/sub/"+did+"/"+itemData.subid + ".xml";
+		                	Intent i = new Intent(Intent.ACTION_VIEW);
+		                	i.setData(Uri.parse(url));
+		                	startActivity(i);
+	                	*/
 	                }else if (itemData.keyword != null) {
 	                    //add new search tab result
 	                	ShooterClientAndroid shtc = (ShooterClientAndroid)getParent();

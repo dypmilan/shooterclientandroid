@@ -20,9 +20,21 @@
         android:name="android.app.searchable"
         android:resource="@xml/searchable" />
         </activity>
+        
      <activity
       android:name=".LatestResultsActivity"
       android:label="@string/latest_label"
+      android:launchMode="singleTop">
+      <intent-filter>
+        <action
+          android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      
+    </activity>
+    
+    <activity
+      android:name=".SubDetailsActivity"
+      android:label="@string/detail_label"
       android:launchMode="singleTop">
       <intent-filter>
         <action
