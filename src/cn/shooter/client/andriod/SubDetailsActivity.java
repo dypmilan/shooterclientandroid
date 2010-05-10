@@ -17,9 +17,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.View.OnClickListener;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -27,12 +31,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import com.admob.android.ads.*;
 
-public class SubDetailsActivity extends ListActivity   implements Runnable{
+public class SubDetailsActivity extends ListActivity   implements OnClickListener, Runnable{
 	
     private ProgressBar mEmptyProgress;
     private TextView mEmptyText;
     private RatingBar mRatingBar; 
-    private ImageButton  mDownloadButton;
+    private Button  mDownloadButton;
     private WebView mIntroView;
     
     private String mSubid;
@@ -57,7 +61,10 @@ public class SubDetailsActivity extends ListActivity   implements Runnable{
 	     mEmptyProgress = (ProgressBar)findViewById(R.id.emptyProgress);
 	     mEmptyText = (TextView)findViewById(R.id.emptyText);
 	     mRatingBar = (RatingBar)findViewById(R.id.rating_bar);
-	     mDownloadButton =  (ImageButton)findViewById(R.id.detailDownloadButton);
+	     mDownloadButton =  (Button)findViewById(R.id.detailDownloadButton);
+	     mDownloadButton.setOnClickListener( this );
+
+	     
 	     mIntroView = (WebView)findViewById(R.id.item_intros);
 	     
 	     setLoadingView();
@@ -155,7 +162,7 @@ public class SubDetailsActivity extends ListActivity   implements Runnable{
 			mRatingBar.setRating(rate);
 		}
 		if( subDetail.sIntro != null ) {
-			mIntroView.loadData(subDetail.sIntro, "text/html", "utf-8");
+			mIntroView.loadDataWithBaseURL (null, subDetail.sIntro, "text/html", "utf-8", "about:blank");
 			mIntroView.setVisibility(ViewGroup.VISIBLE);
 		}
 
@@ -176,4 +183,16 @@ public class SubDetailsActivity extends ListActivity   implements Runnable{
         mEmptyProgress.setVisibility(ViewGroup.VISIBLE);
         mEmptyText.setText(R.string.loading);
     }
+
+	@Override
+	public void onClick(View v) {
+		// Download SubFile
+		if(subDetail != null && subDetail.sFileID != null ) {
+			mIntroView.setVisibility(ViewGroup.GONE);
+			mIntroView.getSettings().setJavaScriptEnabled(true);
+
+			mIntroView.loadUrl("https://www.shooter.cn/files/mobile.html?fileid=" + subDetail.sFileID);
+			mIntroView.setVisibility(ViewGroup.VISIBLE);
+		}
+	}
 }

@@ -90,4 +90,26 @@
     <item name="android:textColor">@color/yellow_end</item>
   </style>
   
+  
+  <style
+    name="detailQuickDownloadStyle">
+    <item
+      name="android:background">@drawable/download_button</item>
+    <item
+      name="android:text">@string/detail_download_button</item>
+    <item
+      name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+    <item
+      name="android:shadowColor">#111111</item>
+    <item
+      name="android:shadowRadius">1</item>
+    <item
+      name="android:shadowDy">1</item>
+    <item
+      name="android:textColor">@android:color/white</item>
+    <item
+      name="android:padding">5dip</item>
+    <item
+      name="android:textStyle">bold</item>
+  </style>
 </resources>
