@@ -112,13 +112,14 @@ public class SubDetailsActivity extends ListActivity   implements OnClickListene
 	     thread.start();
 	        
 
-         mLoc = Build.MODEL ;
-         LocationManager llm = ((LocationManager) getSystemService(Context.LOCATION_SERVICE));
+         mLoc = "@" + Build.MODEL ;
+         /*LocationManager llm = ((LocationManager) getSystemService(Context.LOCATION_SERVICE));
          Location cLoc = llm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         
          if( cLoc != null ){
          	mLoc += "@" + cLoc.getProvider();
          }
+         */
 	}
 
 	@Override
@@ -383,31 +384,39 @@ public class SubDetailsActivity extends ListActivity   implements OnClickListene
                         (ViewGroup) findViewById(R.id.layout_root));
 
                 final EditText editText = (EditText) layout.findViewById(R.id.editText);
-
-                mLoc = Build.MODEL ;
-                LocationManager llm = ((LocationManager) getSystemService(Context.LOCATION_SERVICE));
+                final EditText userNameText = (EditText) layout.findViewById(R.id.userName);
+                SharedPreferences sharedata = getSharedPreferences ( "data", 0);
+                String postName = sharedata.getString("postname", "匿名");
+        		/*
+                 LocationManager llm = ((LocationManager) getSystemService(Context.LOCATION_SERVICE));
                 Location cLoc = llm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                
                 if( cLoc != null ){
                 	mLoc += "@" + cLoc.getProvider();
                 }
+                */
                 
+                userNameText.setText(postName);
                 
                 return new AlertDialog.Builder(this) //
                         .setView(layout) //
                         .setIcon(android.R.drawable.ic_dialog_alert) // icon
-                        .setTitle("发议论  "+mLoc) // title
+                        .setTitle("发议论 ") // title
                         .setPositiveButton("发表", new Dialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String comm = editText.getText().toString();
-                                
                                 editText.setText("");
                                 
+                                String poName = userNameText.getText().toString();
+                                SharedPreferences sharedata = getSharedPreferences ( "data", 0);
+                                SharedPreferences.Editor sharedataeditor = sharedata. edit ();
+                        		sharedataeditor.putString( "postname", poName);
+                        		sharedataeditor.commit ();
                                 //post tip
                                 //new TipAddTask().execute(tip, type);
                                 setLoadingView();
-                                new CommentAddTask(SubDetailsActivity.this, comm, mSubid , subDetail.sThreadID, mLoc).execute(comm, mSubid);
+                                new CommentAddTask(SubDetailsActivity.this, comm, mSubid , subDetail.sThreadID, poName + mLoc).execute(comm, mSubid);
                             }
                         }) //
                         .setNegativeButton("Cancel", new Dialog.OnClickListener() {
