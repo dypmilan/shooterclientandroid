@@ -108,6 +108,8 @@ public class SHTSearchResultsSAXHandler extends DefaultHandler {
 		        	itemData.fileid =  builder.toString().trim();
 		        else if (localName == "rate")
 		        	itemData.rate = builder.toString().trim();
+		        else if (localName == "totalposts")
+		        	itemData.totalPosts = builder.toString().trim();
     		}
     	}
     	if (localName == "subrief" && mXMLType == XML_TYPE_SEARCH_RESULT && itemData.title != null)  

@@ -10,6 +10,7 @@ public class ItemDataStruct {
 	public String fileid;
 	public String subid;
 	public String rate;
+	public String totalPosts;
 	
 
     public final static int TYPE_SECTION_DETAIL = 0;

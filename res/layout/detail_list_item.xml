@@ -49,18 +49,29 @@
       android:ellipsize="end"
       android:textAppearance="@style/TextViewStyleDetailListItemLineTimestamp" />
      
-       <!-- Stars. -->
-    <TextView
-      android:id="@+id/rankTextView"
+       <!-- totalPosts. -->
+       <TextView
+      android:id="@+id/totalPosts"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
-      android:layout_alignParentBottom="true"
+      android:textAppearance="@style/TextViewStyleDetailListItemLineIntro"
       android:maxLines="1"
       android:scrollHorizontally="true"
-      android:ellipsize="end"
-      android:textAppearance="@style/TextViewStyleDetailListItemLineRankStar" />
-      
+      android:ellipsize="end" 
+      android:paddingLeft="9dip"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentBottom="true"/>
+  <!-- 评分 -->
+    <RatingBar android:id="@+id/sub_rating"
+  			  android:visibility="gone"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+      			android:layout_toLeftOf="@id/totalPosts"
+                android:numStars="5" />
+   
   	</RelativeLayout >
   </LinearLayout>
   

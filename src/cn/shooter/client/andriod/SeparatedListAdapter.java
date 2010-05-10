@@ -12,6 +12,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class SeparatedListAdapter extends BaseAdapter {
@@ -97,16 +98,18 @@ public class SeparatedListAdapter extends BaseAdapter {
 			        timeTextView.setText(itemData.timeStamp);
 			        
 			        if(itemData.rate != null){
-			        	int rate = Integer.parseInt(itemData.rate) / 2 ;
-			        	String stars = "";
-			        	for(int i = 0; i< 5 ; i++) {
-			        		if(i <= rate)
-			        			stars += "★";
-			        		else
-			        			stars += "☆";
-			        	}
-			        	rankTextView.setText(stars);
+			        	float rate = ((float)Integer.parseInt(itemData.rate)) / 2 ;
+			        	
+			        	RatingBar subRatingBar =  (RatingBar) convertView.findViewById(R.id.sub_rating);
+			        	subRatingBar.setVisibility(View.VISIBLE);
+			        	subRatingBar.setRating(rate);
 			        }
+			        
+			        if( itemData.totalPosts != null ) {
+			        	TextView totalPostsView  = (TextView) convertView.findViewById(R.id.totalPosts);
+			        	totalPostsView.setText("("+itemData.totalPosts+")");
+			        }
+			        
 					break;
 				case ItemDataStruct.TYPE_SECTION_KEYWORDS:
 					
